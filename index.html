@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Omar Daniel Ortiz Peralta | Ingeniería en Energías Renovables</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    /* ============================================================
+       CSS VARIABLES — PALETA AZUL TECNOLÓGICA
+    ============================================================ */
+    :root {
+      --blue-deep:    #050f1a;
+      --blue-dark:    #071d35;
+      --blue-mid:     #0a3560;
+      --blue-accent:  #1167b1;
+      --blue-bright:  #1e90ff;
+      --blue-glow:    #5ab4ff;
+      --blue-light:   #a8d8ff;
+      --blue-pale:    #dceeff;
+      --white:        #f0f8ff;
+      --mono:         'Share Tech Mono', monospace;
+      --sans:         'Exo 2', sans-serif;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background-color: var(--blue-deep);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       ANIMATED GRID BACKGROUND
+    ============================================================ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(30,144,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,144,255,0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridShift 20s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gridShift {
+      0%   { background-position: 0 0, 0 0; }
+      100% { background-position: 50px 50px, 50px 50px; }
+    }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      background: rgba(5,15,26,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(30,144,255,0.2);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      color: var(--blue-glow);
+      letter-spacing: 0.1em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--blue-light);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--blue-bright); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 3rem 4rem;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Radial glow behind content */
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: -10%; left: -10%;
+      width: 60%; height: 80%;
+      background: radial-gradient(ellipse, rgba(17,103,177,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-text .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--blue-glow);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero-text h1 span {
+      color: var(--blue-bright);
+    }
+
+    .hero-text .subtitle {
+      margin-top: 1.2rem;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--blue-pale);
+      line-height: 1.7;
+      max-width: 520px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .btn-primary {
+      background: var(--blue-accent);
+      color: var(--white);
+      border: 1px solid var(--blue-bright);
+      box-shadow: 0 0 18px rgba(30,144,255,0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-bright);
+      box-shadow: 0 0 30px rgba(30,144,255,0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--blue-glow);
+      border: 1px solid rgba(90,180,255,0.4);
+    }
+
+    .btn-outline:hover {
+      background: rgba(30,144,255,0.1);
+      border-color: var(--blue-glow);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       FOTO DE PERFIL — PLACEHOLDER FÁCIL DE IDENTIFICAR
+    ============================================================ */
+    .hero-photo {
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 1s 0.9s forwards;
+    }
+
+    /* ┌─────────────────────────────────────────────────────────┐
+       │  👇  CAMBIA SOLO ESTA URL POR TU FOTO REAL              │
+       │  Ejemplo: src="https://i.imgur.com/tuFoto.jpg"          │
+       └─────────────────────────────────────────────────────────┘ */
+    .profile-img {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid rgba(30,144,255,0.4);
+      box-shadow:
+        0 0 0 6px rgba(17,103,177,0.15),
+        0 0 40px rgba(30,144,255,0.25);
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Marco decorativo */
+    .hero-photo::before {
+      content: '';
+      position: absolute;
+      top: -10px; right: -10px;
+      width: 80%; height: 80%;
+      border-top: 2px solid var(--blue-bright);
+      border-right: 2px solid var(--blue-bright);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; left: -10px;
+      width: 60%; height: 60%;
+      border-bottom: 2px solid rgba(30,144,255,0.4);
+      border-left: 2px solid rgba(30,144,255,0.4);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       SECCIÓN GENÉRICA
+    ============================================================ */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 3rem;
+    }
+
+    .section-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--blue-glow);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2.5rem;
+    }
+
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-bright), transparent);
+      margin-bottom: 2.5rem;
+      border-radius: 2px;
+    }
+
+    /* ============================================================
+       SOBRE MÍ
+    ============================================================ */
+    #sobre-mi { background: rgba(7,29,53,0.6); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--blue-pale);
+      margin-bottom: 1rem;
+    }
+
+    .info-card {
+      background: rgba(10,53,96,0.5);
+      border: 1px solid rgba(30,144,255,0.2);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(30,144,255,0.1);
+    }
+
+    .info-item:last-child { border-bottom: none; }
+
+    .info-item .label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--blue-glow);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-item .value {
+      font-size: 0.9rem;
+      color: var(--white);
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       EXPERIENCIA
+    ============================================================ */
+    #experiencia { background: var(--blue-deep); }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--blue-bright), transparent);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -2.42rem;
+      top: 0.4rem;
+      width: 10px; height: 10px;
+      background: var(--blue-bright);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--blue-bright);
+    }
+
+    .tl-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .tl-sub {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--blue-glow);
+      margin: 0.3rem 0 0.6rem;
+      letter-spacing: 0.05em;
+    }
+
+    .tl-desc {
+      font-size: 0.95rem;
+      color: var(--blue-pale);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       HABILIDADES / SKILLS
+    ============================================================ */
+    #habilidades { background: rgba(7,29,53,0.6); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skill-card {
+      background: rgba(10,53,96,0.4);
+      border: 1px solid rgba(30,144,255,0.2);
+      border-radius: 6px;
+      padding: 1.2rem 1.4rem;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+
+    .skill-card:hover {
+      border-color: var(--blue-bright);
+      box-shadow: 0 0 20px rgba(30,144,255,0.2);
+      transform: translateY(-3px);
+    }
+
+    .skill-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--blue-glow);
+      letter-spacing: 0.1em;
+    }
+
+    /* ============================================================
+       CONTACTO
+    ============================================================ */
+    #contacto {
+      background: linear-gradient(180deg, var(--blue-deep) 0%, var(--blue-dark) 100%);
+      text-align: center;
+    }
+
+    .contact-box {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-box p {
+      font-size: 1rem;
+      color: var(--blue-pale);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      color: var(--blue-bright);
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border: 1px solid rgba(30,144,255,0.35);
+      border-radius: 4px;
+      background: rgba(10,53,96,0.3);
+      transition: all 0.25s;
+    }
+
+    .contact-email:hover {
+      background: rgba(30,144,255,0.12);
+      box-shadow: 0 0 24px rgba(30,144,255,0.3);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 1.5rem 3rem;
+      border-top: 1px solid rgba(30,144,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: rgba(168,216,255,0.45);
+    }
+
+    /* ============================================================
+       ANIMACIONES
+    ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Animación al scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      #hero, section { padding: 4rem 1.5rem; }
+      .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-photo { order: -1; }
+      .profile-img { max-width: 220px; }
+      .about-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================
+       NAVEGACIÓN
+  ====================================================== -->
+  <nav>
+    <span class="nav-logo">&lt;ODOP /&gt;</span>
+    <ul class="nav-links">
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#habilidades">Habilidades</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- ======================================================
+       HERO
+  ====================================================== -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="eyebrow">// Ingeniería · Energía Solar · BCS</p>
+        <h1>Omar Daniel<br><span>Ortiz Peralta</span></h1>
+        <p class="subtitle">
+          Estudiante de Ingeniería en Fuentes de Energía Renovables en la UABCS,
+          con enfoque en energía solar y un perfil orientado a la aplicación
+          tecnológica de soluciones sostenibles.
+        </p>
+        <div class="hero-cta">
+          <a href="#contacto" class="btn btn-primary">&#9993; Contactar</a>
+          <a href="#experiencia" class="btn btn-outline">Ver experiencia</a>
+        </div>
+      </div>
+
+      <!-- ================================================
+           FOTO DE PERFIL
+           ─────────────────────────────────────────────
+           👉 PARA CAMBIAR LA FOTO:
+              Busca la etiqueta <img class="profile-img">
+              y reemplaza el atributo src con la URL
+              de tu imagen.
+              Ejemplo:
+              src="https://avatars.githubusercontent.com/tuUsuario"
+           ─────────────────────────────────────────────
+      ================================================ -->
+      <div class="hero-photo">
+        <img
+          class="profile-img"
+          src="https://placehold.co/320x320/0a3560/5ab4ff?text=Tu+Foto+Aquí"
+          alt="Foto de perfil de Omar Daniel Ortiz Peralta"
+        />
+        <!-- ↑↑ CAMBIA LA URL DE "src" POR TU FOTO ↑↑ -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SOBRE MÍ
+  ====================================================== -->
+  <section id="sobre-mi">
+    <div class="section-inner">
+      <p class="section-label">// 01</p>
+      <h2 class="section-title">Sobre mí</h2>
+      <div class="divider"></div>
+
+      <div class="about-grid reveal">
+        <div class="about-text">
+          <p>
+            Soy Omar Daniel Ortiz Peralta, estudiante de <strong>Ingeniería en Fuentes de
+            Energía Renovables</strong> en la Universidad Autónoma de Baja California Sur,
+            con sede en La Paz, BCS — mi ciudad natal.
+          </p>
+          <p>
+            Me encuentro en preparación activa para dedicarme de lleno al sector de la
+            <strong>energía solar</strong>: su diseño, instalación y optimización. Creo
+            firmemente que las energías renovables son el motor del México del futuro.
+          </p>
+          <p>
+            En paralelo, planeo continuar con el desarrollo de la <strong>empresa
+            familiar</strong>, aportando criterio técnico y visión de ingeniería a los
+            proyectos que ya conoce la región.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-item">
+            <span class="label">Edad</span>
+            <span class="value">20 años</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Ubicación</span>
+            <span class="value">La Paz, BCS, México</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Universidad</span>
+            <span class="value">UABCS</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Carrera</span>
+            <span class="value">Ing. en Fuentes de Energía Renovables</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Correo</span>
+            <span class="value" style="font-size:0.78rem;">omardanieo_24@alu.uabcs.mx</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       EXPERIENCIA
+  ====================================================== -->
+  <section id="experiencia">
+    <div class="section-inner">
+      <p class="section-label">// 02</p>
+      <h2 class="section-title">Experiencia</h2>
+      <div class="divider"></div>
+
+      <div class="timeline">
+
+        <div class="tl-item reveal">
+          <p class="tl-title">Ayudante de Ingenieros</p>
+          <p class="tl-sub">Proyectos de ingeniería · La Paz, BCS</p>
+          <p class="tl-desc">
+            Apoyo técnico en campo durante proyectos de ingeniería,
+            adquiriendo experiencia práctica en procesos, medición y
+            supervisión de obra bajo la guía de ingenieros de distintas
+            especialidades.
+          </p>
+        </div>
+
+        <div class="tl-item reveal">
+          <p class="tl-title">Proyectos Hidráulicos — Residencias y Hoteles</p>
+          <p class="tl-sub">Instalaciones de agua · La Paz, BCS</p>
+          <p class="tl-desc">
+            Participación en trabajos de instalación y mantenimiento de
+            sistemas de agua para uso residencial y hotelero, desarrollando
+            habilidades en plomería técnica, lectura de planos y coordinación
+            con equipos de obra.
+          </p>
+        </div>
+
+        <div class="tl-item reveal">
+          <p class="tl-title">Empresa Familiar</p>
+          <p class="tl-sub">Gestión y operaciones · La Paz, BCS</p>
+          <p class="tl-desc">
+            Colaboración activa en la empresa familiar, aportando visión
+            técnica y orientada a la mejora continua. Plan de integración
+            de tecnologías renovables a futuro.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       HABILIDADES
+  ====================================================== -->
+  <section id="habilidades">
+    <div class="section-inner">
+      <p class="section-label">// 03</p>
+      <h2 class="section-title">Áreas de enfoque</h2>
+      <div class="divider"></div>
+
+      <div class="skills-grid">
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">☀️</div>
+          <p class="skill-name">Energía Solar</p>
+          <p class="skill-tag">FOTOVOLTAICA · TÉRMICA</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">⚡</div>
+          <p class="skill-name">Sistemas Eléctricos</p>
+          <p class="skill-tag">INGENIERÍA ELÉCTRICA</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🔧</div>
+          <p class="skill-name">Instalaciones Técnicas</p>
+          <p class="skill-tag">HIDRÁULICA · OBRA CIVIL</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">📐</div>
+          <p class="skill-name">Diseño de Proyectos</p>
+          <p class="skill-tag">PLANEACIÓN · CAD</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🌿</div>
+          <p class="skill-name">Sostenibilidad</p>
+          <p class="skill-tag">ENERGÍAS LIMPIAS</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🏗️</div>
+          <p class="skill-name">Trabajo en Campo</p>
+          <p class="skill-tag">SUPERVISIÓN · OPERACIONES</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       CONTACTO
+  ====================================================== -->
+  <section id="contacto">
+    <div class="section-inner">
+      <div class="contact-box reveal">
+        <p class="section-label" style="text-align:center;">// 04</p>
+        <h2 class="section-title">Contacto</h2>
+        <div class="divider" style="margin: 0 auto 2.5rem;"></div>
+        <p>
+          ¿Tienes un proyecto de energía renovable, una propuesta de colaboración
+          o simplemente quieres conectar? Escríbeme y con gusto respondemos.
+        </p>
+        <a class="contact-email" href="mailto:omardanieo_24@alu.uabcs.mx">
+          ✉ omardanieo_24@alu.uabcs.mx
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer>
+    <span>&copy; 2025 Omar Daniel Ortiz Peralta</span>
+    <span>La Paz, BCS · UABCS · Ing. Energías Renovables</span>
+  </footer>
+
+  <!-- ======================================================
+       JAVASCRIPT — Animación al hacer scroll
+  ====================================================== -->
+  <script>
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
